@@ -38,17 +38,13 @@ namespace API.Profiles
 
             CreateMap<UpdateProfessorDto, Professor>()
             .ForMember(
-                dest => dest.Id,
-                opt => opt.MapFrom(src => $"{src.Id}")
-            )
-            .ForMember(
                 dest => dest.email,
                 opt => opt.MapFrom(src => $"{src.email}")
             )
             .ForMember(
                 dest => dest.endereco,
                 opt => opt.MapFrom( src => src.endereco)
-            );;
+            );
         }
     }
 }

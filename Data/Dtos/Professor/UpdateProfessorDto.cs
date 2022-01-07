@@ -8,10 +8,7 @@ using API.Models;
 namespace API.Data.Dtos.Professor
 {
     public class UpdateProfessorDto
-    {
-        [Required]
-        public int Id { get; set; }
-        
+    {        
         public String email { get; set; }
         
         [Required]

@@ -37,11 +37,12 @@ namespace API.Controllers
         public IActionResult GetProfessorById(int id)
         {
             Professor professor = _context.Professores.FirstOrDefault(professor => professor.Id == id);
+            
             return Ok(professor);
         }
 
         [HttpPost]
-        public IActionResult PostProfessor(CreateProfessorDto newProfessor )
+        public IActionResult PostProfessor(CreateProfessorDto newProfessor)
         {
             Professor professor = _mapper.Map<Professor>(newProfessor);
 
@@ -55,14 +56,36 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateProfessor(int id, UpdateProfessorDto updateProfessor)
         {
+            Professor professor = _context.Professores.FirstOrDefault(professor => professor.Id == id);
 
-            return Ok();
+            professor.email = updateProfessor.email;
+            professor.endereco = updateProfessor.endereco;
+
+            _context.Professores.Update(professor);
+
+            _context.SaveChanges();
+
+
+            return Ok(GetProfessorById(id));
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteProfessorById(int id)
         {
-            return Ok();
+            Professor professor = _context.Professores.FirstOrDefault(professor => professor.Id == id);
+
+            if (professor != null)
+            {
+                _context.Professores.Remove(professor);
+            }
+            else 
+            {
+                return NotFound();
+            }
+
+            _context.SaveChanges();
+
+            return Ok(professor);
         }
 
 

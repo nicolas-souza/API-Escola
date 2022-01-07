@@ -28,7 +28,7 @@ namespace API.Profiles
                 .ForMember(
                 dest => dest.endereco,
                 opt => opt.MapFrom( src => src)
-            );;
+            );
 
             CreateMap<UpdateAlunoDto, Aluno>()
                 .ForMember(
@@ -38,7 +38,7 @@ namespace API.Profiles
                 .ForMember(
                 dest => dest.endereco,
                 opt => opt.MapFrom( src => src.endereco)
-            );;
+            );
         }
     }
 }
