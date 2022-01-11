@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
-using API.Data.Dtos.Professor;
+using API.Data.Dtos.ProfessorDto;
 using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -36,8 +36,8 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetProfessorById(int id)
         {
-            Professor professor = _context.Professores.FirstOrDefault(professor => professor.Id == id);
-            
+            Professor professor = _context.Professores.FirstOrDefault(professor => professor.Id == id);            
+             
             return Ok(professor);
         }
 
@@ -59,12 +59,12 @@ namespace API.Controllers
             Professor professor = _context.Professores.FirstOrDefault(professor => professor.Id == id);
 
             professor.email = updateProfessor.email;
-            professor.endereco = updateProfessor.endereco;
+            
+            professor.endereco = _mapper.Map<Endereco>(updateProfessor.endereco);
 
             _context.Professores.Update(professor);
 
             _context.SaveChanges();
-
 
             return Ok(GetProfessorById(id));
         }
@@ -86,7 +86,7 @@ namespace API.Controllers
             _context.SaveChanges();
 
             return Ok(professor);
-        }
+        }      
 
 
     }

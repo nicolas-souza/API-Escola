@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Data.Dtos.EnderecoDtos;
 using API.Models;
 
-namespace API.Data.Dtos.Professor
+namespace API.Data.Dtos.ProfessorDto
 {
     public class CreateProfessorDto
     {
@@ -23,6 +24,6 @@ namespace API.Data.Dtos.Professor
         public DateTime nascimento { get; set; }
 
         [Required]
-        public Endereco endereco {get; set;}
+        public EnderecoDto endereco {get; set;}
     }
 }

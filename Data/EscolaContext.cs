@@ -13,12 +13,18 @@ namespace API.Data
 
         public DbSet<Professor> Professores {get; set;}
 
-        public DbSet<Aluno> Aluno {get; set;}
+        public DbSet<Aluno> Alunos {get; set;}
+
+        public DbSet<Endereco> Enderecos { get; set; }
+        
+         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Professor>().ToTable("Professor");
             modelBuilder.Entity<Aluno>().ToTable("Aluno");
+            modelBuilder.Entity<Endereco>().ToTable("Endereco");
+          
         }
     }
 }

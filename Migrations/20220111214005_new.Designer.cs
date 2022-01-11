@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(EscolaContext))]
-    [Migration("20220107140759_StartFinal")]
-    partial class StartFinal
+    [Migration("20220111214005_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,11 +62,11 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Endereco", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdEndereco")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEndereco"), 1L, 1);
 
                     b.Property<string>("Cep")
                         .IsRequired()
@@ -84,9 +84,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdEndereco");
 
-                    b.ToTable("Endereco");
+                    b.ToTable("Endereco", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Professor", b =>

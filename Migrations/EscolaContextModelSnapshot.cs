@@ -60,11 +60,11 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Endereco", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdEndereco")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEndereco"), 1L, 1);
 
                     b.Property<string>("Cep")
                         .IsRequired()
@@ -82,9 +82,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdEndereco");
 
-                    b.ToTable("Endereco");
+                    b.ToTable("Endereco", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Professor", b =>
