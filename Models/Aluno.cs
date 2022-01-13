@@ -9,7 +9,6 @@ namespace API.Models
 {
     public class Aluno
     {
-
         [Key]
         public int Id { get; set; }
 

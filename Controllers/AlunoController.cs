@@ -56,72 +56,72 @@ namespace API.Controllers
             return Ok(alunos);
         }
 
-[HttpGet("{id}")]
-public IActionResult GetAlunoById(int id)
-{
-    Aluno aluno = _context.Alunos.AsNoTracking().FirstOrDefault(aluno => aluno.Id == id);
+        [HttpGet("{id}")]
+        public IActionResult GetAlunoById(int id)
+        {
+            Aluno aluno = _context.Alunos.AsNoTracking().FirstOrDefault(aluno => aluno.Id == id);
 
-    aluno.endereco = _context.Enderecos.AsNoTracking().FirstOrDefault(endereco => endereco.IdEndereco == aluno.enderecoId);
+            aluno.endereco = _context.Enderecos.AsNoTracking().FirstOrDefault(endereco => endereco.IdEndereco == aluno.enderecoId);
 
-    return Ok(aluno);
-}
+            return Ok(aluno);
+        }
 
-[HttpPost]
-public IActionResult PostAluno(CreateAlunoDto newObj)
-{
-    try
-    {
-        Aluno obj = new Aluno();
+        [HttpPost]
+        public IActionResult PostAluno(CreateAlunoDto newObj)
+        {
+            try
+            {
+                Aluno obj = new Aluno();
 
-        obj = dto.Create(newObj);
+                obj = dto.Create(newObj);
 
-        _context.Alunos.Add(obj);
+                _context.Alunos.Add(obj);
 
-        _context.SaveChanges();
-    }
-    catch (Exception ex)
-    {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
 
-    }
+            }
 
 
-    return Ok();
-}
+            return Ok();
+        }
 
-[HttpPut("{id}")]
-public IActionResult UpdateAluno(int id, UpdateAlunoDto updateAluno)
-{
-    Aluno aluno = _context.Alunos.AsNoTracking().FirstOrDefault(aluno => aluno.Id == id);
+        [HttpPut("{id}")]
+        public IActionResult UpdateAluno(int id, UpdateAlunoDto updateAluno)
+        {
+            Aluno aluno = _context.Alunos.AsNoTracking().FirstOrDefault(aluno => aluno.Id == id);
 
-    aluno.endereco = _context.Enderecos.AsNoTracking().FirstOrDefault(endereco => endereco.IdEndereco == aluno.enderecoId);
+            aluno.endereco = _context.Enderecos.AsNoTracking().FirstOrDefault(endereco => endereco.IdEndereco == aluno.enderecoId);
 
-    aluno = dto.Update(aluno, updateAluno);
+            aluno = dto.Update(aluno, updateAluno);
 
-    _context.Alunos.Update(aluno);
+            _context.Alunos.Update(aluno);
 
-    _context.SaveChanges();
+            _context.SaveChanges();
 
-    return Ok(aluno);
-}
+            return Ok(aluno);
+        }
 
-[HttpDelete("{id}")]
-public IActionResult DeleteProfessorById(int id)
-{
-    Aluno aluno = _context.Alunos.FirstOrDefault(aluno => aluno.Id == id);
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProfessorById(int id)
+        {
+            Aluno aluno = _context.Alunos.FirstOrDefault(aluno => aluno.Id == id);
 
-    if (aluno != null)
-    {
-        _context.Alunos.Remove(aluno);
-    }
-    else
-    {
-        return NotFound();
-    }
+            if (aluno != null)
+            {
+                _context.Alunos.Remove(aluno);
+            }
+            else
+            {
+                return NotFound();
+            }
 
-    _context.SaveChanges();
+            _context.SaveChanges();
 
-    return Ok(aluno);
-}
+            return Ok(aluno);
+        }
 
     }
 }

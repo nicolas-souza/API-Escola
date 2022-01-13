@@ -31,7 +31,7 @@ namespace API.Data.Dtos
 
                     Cidade = newObj.endereco.Cidade,
                     Pais = newObj.endereco.Pais,
-                    
+
                 }
 
             };
@@ -77,6 +77,48 @@ namespace API.Data.Dtos
 
             
             return endereco;
+        }
+
+
+        public Professor Create(CreateProfessorDto newObj)
+        {
+            Professor professor = new Professor()
+            {
+                // Id = 0,
+                nome = newObj.nome,
+                email = newObj.email,
+                nascimento = newObj.nascimento,
+                disciplinaLecionada = newObj.disciplinaLecionada,
+                // enderecoId = 0,
+
+                endereco = new Endereco()
+                {
+                    IdEndereco = 0,
+
+                    Cep = newObj.endereco.Cep,
+
+                    Rua = newObj.endereco.Rua,
+
+                    Cidade = newObj.endereco.Cidade,
+                    Pais = newObj.endereco.Pais,
+
+                }                
+
+            };
+
+            return professor;
+        }
+
+        public Professor Update (Professor oldObj, UpdateProfessorDto newObj)
+        {             
+            
+            if(!string.IsNullOrEmpty(newObj.email))
+                oldObj.email = newObj.email;
+
+
+            oldObj.endereco = SetEndereco(oldObj.endereco, newObj.endereco);
+
+            return oldObj;
         }
     }
 }

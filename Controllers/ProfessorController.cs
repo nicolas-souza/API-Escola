@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Data.Dtos;
 using API.Data.Dtos.ProfessorDto;
 using API.Models;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -17,26 +18,46 @@ namespace API.Controllers
         //interface com o banco
         private EscolaContext _context;
 
-        //Realiza as conversões DTO
-        private IMapper _mapper;
+        private SolucionaDto dto = new SolucionaDto();
 
+        
         //Os parâmetros vem do Startup.cs
-        public ProfessorController(EscolaContext context, IMapper mapper)
+        public ProfessorController(EscolaContext context)
         {
             _context = context;
-            _mapper = mapper;
+            
         }
 
         [HttpGet]
         public IActionResult GetAllProfessor()
         {
-            return Ok(_context.Professores.ToList());
+            var Allprofessor = 
+                from professor in _context.Professores
+                from endereco in _context.Enderecos
+                where professor.enderecoId == endereco.IdEndereco
+                select new 
+                {
+                    nome = professor.nome,
+                    email = professor.email,
+                    nascimento = professor.nascimento,
+                    disciplina = professor.disciplinaLecionada, 
+                    endereco = new {
+                        Cep = endereco.Cep,
+                        Rua = endereco.Rua,
+                        Cidade = endereco.Cidade,
+                        Pais = endereco.Pais
+                    }
+                };
+
+            return Ok(Allprofessor);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetProfessorById(int id)
         {
-            Professor professor = _context.Professores.FirstOrDefault(professor => professor.Id == id);            
+            Professor professor = _context.Professores.AsNoTracking().FirstOrDefault(professor => professor.Id == id);    
+
+            professor.endereco = _context.Enderecos.AsNoTracking().FirstOrDefault(endereco => endereco.IdEndereco == professor.enderecoId);        
              
             return Ok(professor);
         }
@@ -44,7 +65,7 @@ namespace API.Controllers
         [HttpPost]
         public IActionResult PostProfessor(CreateProfessorDto newProfessor)
         {
-            Professor professor = _mapper.Map<Professor>(newProfessor);
+            Professor professor = dto.Create(newProfessor);
 
             _context.Professores.Add(professor);
 
@@ -56,11 +77,12 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateProfessor(int id, UpdateProfessorDto updateProfessor)
         {
-            Professor professor = _context.Professores.FirstOrDefault(professor => professor.Id == id);
-
-            professor.email = updateProfessor.email;
             
-            professor.endereco = _mapper.Map<Endereco>(updateProfessor.endereco);
+            Professor professor = _context.Professores.AsNoTracking().FirstOrDefault(aluno => aluno.Id == id);
+
+            professor.endereco = _context.Enderecos.AsNoTracking().FirstOrDefault(endereco => endereco.IdEndereco == professor.enderecoId);
+
+            professor = dto.Update(professor, updateProfessor);
 
             _context.Professores.Update(professor);
 
