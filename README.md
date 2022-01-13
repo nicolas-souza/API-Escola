@@ -1,3 +1,4 @@
 # API Escola
 
-![Swagger](/API/README/Untitled.png)
+![Swagger](README/Untitled.png)
+
